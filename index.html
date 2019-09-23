@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta lang="en">
+        <meta charset="utf-8">
+        <title> Rock, Paper, Scissors Game </title>
+    </head>
+    <body>
+        <h1> Rock, Paper, Scissors </h1>
+        <h3> Select your choice: </h3> <br> <br>
+        <div id=playerChoice>
+            <button id="rockButton" onclick="rockChoice()"> Rock </button> &nbsp;&nbsp;&nbsp; <button id="paperButton" onclick="paperChoice()"> Paper </button> &nbsp;&nbsp;&nbsp; <button id="scissorsButton" onclick="scissorsChoice()"> Scissors </button> <br> <br>
+        </div>
+        <br>
+        <div id="playerChoiceDepiction">
+            <pre style="font-size: 130%; margin-left: 20em;"> You Chose                                              Computer Chose </pre>
+            <img class="displayPlayer" src="rock.jpg" width="200" height="200" style="margin-left: 18em;">
+            <img class="displayComputer" src="rock.jpg" width="200" height="200" style="margin-left: 21em;">
+        </div>
+        <br><br>
+        <div id="Submission">
+            <button type="submit" onclick="submitChoice()"> Submit choice </button> &nbsp;
+            <button id= "Reset" onclick="reset()"> Play Again </button>
+        </div>
+        <br>
+        <div> 
+            <p id="Winner" style="font-size: 150%; text-align: center"></p> 
+        </div>
+        <div class = "row">
+            <div class = "column">
+                <h3> Wins </h3>
+                <h3 id="winsLog"> 0 </h3>
+            </div>
+            <div class = "column">
+                <h3> Losses </h3>
+                <h3 id="lossesLog"> 0 </h3>
+            </div>
+            <div class = "column">
+                <h3> Ties </h3>
+                <h3 id="tiesLog"> 0 </h3>
+            </div>
+        </div>
+    </body>
+</html>
+<style>
+    body {
+        background-color: azure;
+    }
+    h1, h3 {
+        text-align: center;
+    }
+    #playerChoice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #Submission {
+        margin-left: 40em;
+    }
+    #playerChoiceDepiction {
+        margin-left: 5em;
+    }
+    .displayPlayer {
+        visibility: hidden;
+    }
+    .displayComputer {
+        visibility: hidden;
+    }
+    .column {
+  float: left;
+  width: 33.33%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+<script>
+    var playerChoice;
+    var computerChoice;
+    var playerWins;
+    var wins = 0;
+    var losses = 0;
+    var ties = 0;
+    
+    function rockChoice() {
+        playerChoice = "rock";
+        randomComputerChoice();
+        
+        var imgReplace = document.getElementsByClassName("displayPlayer")[0];
+        imgReplace.src = "rock.jpg";
+        imgReplace.style.visibility = "visible";
+        
+        var computerReplace = document.getElementsByClassName("displayComputer")[0];
+        if (computerChoice == "rock") {
+            computerReplace.src = "rock.jpg";
+        }
+        else if (computerChoice == "paper") {
+            computerReplace.src = "paper.jpg";
+        }
+        else {
+            computerReplace.src = "scissors.jpg";
+        }
+    }
+    function paperChoice() {
+        playerChoice = "paper";
+        randomComputerChoice();
+        
+        var imgReplace = document.getElementsByClassName("displayPlayer")[0];
+        imgReplace.src = "paper.jpg";
+        imgReplace.style.visibility = "visible";
+        
+        var computerReplace = document.getElementsByClassName("displayComputer")[0];
+        if (computerChoice == "rock") {
+            computerReplace.src = "rock.jpg";
+        }
+        else if (computerChoice == "paper") {
+            computerReplace.src = "paper.jpg";
+        }
+        else {
+            computerReplace.src = "scissors.jpg";
+        }
+    }
+    function scissorsChoice() {
+        playerChoice = "scissors";
+        randomComputerChoice();
+        
+        var imgReplace = document.getElementsByClassName("displayPlayer")[0];
+        imgReplace.src = "scissors.jpg";
+        imgReplace.style.visibility = "visible";
+        
+        var computerReplace = document.getElementsByClassName("displayComputer")[0];
+        if (computerChoice == "rock") {
+            computerReplace.src = "rock.jpg";
+        }
+        else if (computerChoice == "paper") {
+            computerReplace.src = "paper.jpg";
+        }
+        else {
+            computerReplace.src = "scissors.jpg";
+        }
+    }
+    function randomComputerChoice() {
+        var min = 1;
+        var max = 4;
+        var random = Math.floor(Math.random() * (+max - +min)) + +min; 
+        if (random == 1) {
+            computerChoice = "rock";
+        }
+        else if (random == 2) {
+            computerChoice = "paper";
+        }
+        else if (random == 3) {
+            computerChoice = "scissors";
+        }
+        else {
+            alert("Computer Choice is not in the range");
+        }
+    }
+    function submitChoice() {
+        document.getElementById("rockButton").disabled = true;
+        document.getElementById("paperButton").disabled = true;
+        document.getElementById("scissorsButton").disabled = true;
+        
+        var computerReplace = document.getElementsByClassName("displayComputer")[0];
+        computerReplace.style.visibility = "visible";
+        
+        var winner = determineWinner();
+        
+        if (winner == "win") {
+            document.getElementById("Winner").innerHTML = ("Congratulations! You won!");
+        }
+        else if (winner == "loss") {
+            document.getElementById("Winner").innerHTML = ("The computer got the best of you this time");
+        }
+        else {
+            document.getElementById("Winner").innerHTML = ("This one is a draw!");
+        }
+        
+        document.getElementById("winsLog").innerHTML = (wins);
+        document.getElementById("lossesLog").innerHTML = (losses);
+        document.getElementById("tiesLog").innerHTML = (ties);
+    }
+    function determineWinner() {
+        if (playerChoice == "rock") {
+            if (computerChoice == "rock") {
+                playerWins = "tie";
+                ties = ties + 1;
+            }
+            else if (computerChoice == "paper") {
+                playerWins = "loss";
+                losses += 1;
+            }
+            else {
+                playerWins = "win";
+                wins += 1;
+            }
+        }
+        else if (playerChoice == "paper") {
+            if (computerChoice == "paper") {
+                playerWins = "tie";
+                ties += 1;
+            }
+            else if (computerChoice == "scissors") {
+                playerWins = "loss";
+                losses += 1;
+            }
+            else {
+                playerWins = "win";
+                wins += 1;
+            }
+        }
+        else {
+            if (computerChoice == "scissors") {
+                playerWins = "tie";
+                ties += 1;
+            }
+            else if (computerChoice == "rock") {
+                playerWins = "loss";
+                losses += 1;
+            }
+            else {
+                playerWins = "win";
+                wins += 1;
+            }
+        }
+        return playerWins;
+    }
+    function reset() {
+        
+        var computerReplace = document.getElementsByClassName("displayComputer")[0];
+        computerReplace.style.visibility = "hidden";
+        
+        var playerReplace = document.getElementsByClassName("displayPlayer")[0];
+        playerReplace.style.visibility = "hidden";
+        
+        document.getElementById("Winner").innerHTML = ("");
+        
+        document.getElementById("rockButton").disabled = false;
+        document.getElementById("paperButton").disabled = false;
+        document.getElementById("scissorsButton").disabled = false;
+    }
+</script>
